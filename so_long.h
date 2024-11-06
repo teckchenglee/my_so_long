@@ -6,7 +6,7 @@
 /*   By: tlee <tlee@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 01:01:56 by tlee              #+#    #+#             */
-/*   Updated: 2024/11/06 22:10:32 by tlee             ###   ########.fr       */
+/*   Updated: 2024/11/06 22:28:37 by tlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_data
 	t_img	*img;
 }				t_data;
 */
-#define TILE_SIZE 100
+#define TILE_SIZE 32
 
 typedef struct s_images
 {
@@ -80,9 +80,6 @@ typedef struct s_data
 	int			player_x;
 	int			player_y;
 }	t_data;
-
-
-
 
 
 void ft_readmap(t_data *data);
