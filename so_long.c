@@ -6,7 +6,7 @@
 /*   By: tlee <tlee@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 22:06:46 by tlee              #+#    #+#             */
-/*   Updated: 2024/11/06 22:08:47 by tlee             ###   ########.fr       */
+/*   Updated: 2024/11/07 22:28:02 by tlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,127 +137,13 @@ void free_data(t_data *data)
 	
 	
 }
-void	ft_exit(t_data *data)
-{
-	mlx_loop_end(data->mlx);
-	//free_images(data);
-	mlx_clear_window(data->mlx, data->win);
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
-	//free_double_pointer(vars->map);
-	//free_map_copy(vars);
-	exit(0);
-}
+
 
 int ft_esckey(t_data *data)
 {
-	ft_printf("Escape\n");
+	ft_printf("~~~Exit~~~\n");
 	ft_exit(data);
 	exit(EXIT_SUCCESS);
-}
-void	move_up(t_data *vars)
-{
-	if (vars->map[vars->player_x - 1][vars->player_y] != '1')
-	{
-		if (vars->map[vars->player_x][vars->player_y] != 'E')
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.floor,
-				vars->display_x, vars->display_y);
-		else
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.exit,
-				vars->display_x, vars->display_y);
-		if (vars->map[vars->player_x][vars->player_y] != 'E')
-			vars->map[vars->player_x][vars->player_y] = '0';
-		vars->display_y -= TILE_SIZE;
-		vars->player_x -= 1;
-		++vars->move_count;
-		if (vars->map[vars->player_x][vars->player_y] == '0')
-			vars->map[vars->player_x][vars->player_y] = 'P';
-		if (vars->map[vars->player_x][vars->player_y] == 'C')
-		{
-			vars->map[vars->player_x][vars->player_y] = '0';
-			vars->collected++;
-		}
-		ft_printf("\n%d\n", vars->move_count);
-	}
-}
-
-void	move_down(t_data *vars)
-{
-	if (vars->map[vars->player_x + 1][vars->player_y] != '1')
-	{
-		if (vars->map[vars->player_x][vars->player_y] != 'E')
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.floor,
-				vars->display_x, vars->display_y);
-		else
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.exit,
-				vars->display_x, vars->display_y);
-		if (vars->map[vars->player_x][vars->player_y] != 'E')
-			vars->map[vars->player_x][vars->player_y] = '0';
-		vars->display_y += TILE_SIZE;
-		vars->player_x += 1;
-		++vars->move_count;
-		if (vars->map[vars->player_x][vars->player_y] == '0')
-			vars->map[vars->player_x][vars->player_y] = 'P';
-		if (vars->map[vars->player_x][vars->player_y] == 'C')
-		{
-			vars->map[vars->player_x][vars->player_y] = '0';
-			vars->collected++;
-		}
-		ft_printf("\n%d\n", vars->move_count);
-	}
-}
-
-void	move_right(t_data *vars)
-{
-	if (vars->map[vars->player_x][vars->player_y + 1] != '1')
-	{
-		if (vars->map[vars->player_x][vars->player_y] != 'E')
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.floor,
-				vars->display_x, vars->display_y);
-		else
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.exit,
-				vars->display_x, vars->display_y);
-		if (vars->map[vars->player_x][vars->player_y] != 'E')
-			vars->map[vars->player_x][vars->player_y] = '0';
-		vars->display_x += TILE_SIZE;
-		vars->player_y += 1;
-		++vars->move_count;
-		if (vars->map[vars->player_x][vars->player_y] == '0')
-			vars->map[vars->player_x][vars->player_y] = 'P';
-		if (vars->map[vars->player_x][vars->player_y] == 'C')
-		{
-			vars->map[vars->player_x][vars->player_y] = '0';
-			vars->collected++;
-		}
-		ft_printf("\n%d\n", vars->move_count);
-	}
-}
-
-void	move_left(t_data *vars)
-{
-	if (vars->map[vars->player_x][vars->player_y - 1] != '1')
-	{
-		if (vars->map[vars->player_x][vars->player_y] != 'E')
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.floor,
-				vars->display_x, vars->display_y);
-		else
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.exit,
-				vars->display_x, vars->display_y);
-		if (vars->map[vars->player_x][vars->player_y] != 'E')
-			vars->map[vars->player_x][vars->player_y] = '0';
-		vars->display_x -= TILE_SIZE;
-		vars->player_y -= 1;
-		++vars->move_count;
-		if (vars->map[vars->player_x][vars->player_y] == '0')
-			vars->map[vars->player_x][vars->player_y] = 'P';
-		if (vars->map[vars->player_x][vars->player_y] == 'C')
-		{
-			vars->map[vars->player_x][vars->player_y] = '0';
-			vars->collected++;
-		}
-		ft_printf("\n%d\n", vars->move_count);
-	}
 }
 
 void	check_exit(t_data *vars)
@@ -275,7 +161,7 @@ void	check_exit(t_data *vars)
 	{
 		mlx_put_image_to_window(vars->mlx, vars->win, vars->img.exit,
 			vars->display_x, vars->display_y);
-		ft_printf("\nyou have to collect all the eggs before you go!\n");
+		ft_printf("\nyou have to collect all the gems!\n");
 	}
 }
 
@@ -305,6 +191,121 @@ int	player_move(int keycode, t_data *vars)
 	}
 	return (1);
 }
+
+void	locate_p(t_data *vars)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (vars->map[i])
+	{
+		j = 0;
+		while (vars->map[i][j] != '\n' && vars->map[i][j] != '\0')
+		{
+			if (vars->map[i][j] == 'P')
+			{
+				vars->player_x = i;
+				vars->player_y = j;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+int	*path_locate(char **m, char c, int coords[2])
+{
+	int	i;
+	int	j;
+
+	coords[0] = 0;
+	coords[1] = 0;
+	i = -1;
+	while (m[++i] != NULL)
+	{
+		j = -1;
+		while (m[i][++j] != '\0')
+		{
+			if (m[i][j] == c)
+			{
+				coords[0] = i;
+				coords[1] = j;
+				return (coords);
+			}
+		}
+	}
+	return (NULL);
+}
+char	**path_create(char **m)
+{
+	int	i;
+	int	j;
+	int	coords[2];
+
+	i = path_locate(m, 'P', coords)[0];
+	j = path_locate(m, 'P', coords)[1];
+	if (m[i][j + 1] != '1' && m[i][j + 1] != 'X' && m[i][j + 1] != 'P')
+		m[i][j + 1] = 'P';
+	if (m[i][j - 1] != '1' && m[i][j - 1] != 'X' && m[i][j - 1] != 'P')
+		m[i][j - 1] = 'P';
+	if (m[i + 1][j] != '1' && m[i + 1][j] != 'X' && m[i + 1][j] != 'P')
+		m[i + 1][j] = 'P';
+	if (m[i - 1][j] != '1' && m[i - 1][j] != 'X' && m[i - 1][j] != 'P')
+		m[i - 1][j] = 'P';
+	m[i][j] = 'X';
+	return (m);
+}
+
+int	path_finder(t_data *vars)
+{
+	int		coords[2];
+	char	**m;
+
+	m = vars->route.dup_map;
+	if (!path_locate(m, 'P', coords))
+		return (1);
+	if ((!path_locate(m, 'E', coords) && !path_locate(m, 'C', coords))
+		|| !path_locate(m, 'P', coords))
+	{
+		return (1);
+	}
+	while (path_locate(m, 'P', coords))
+		m = path_create(m);
+	if (path_locate(m, 'E', coords) || path_locate(m, 'C', coords))
+		return (1);
+	return (0);
+}
+
+void check_route(t_data *data)
+{
+	int	i;
+
+	data->route.dup_map = malloc(sizeof(char *) * (data->height + 1));
+	if (!data->route.dup_map)
+	{
+		free(data->route.dup_map);
+		exit(EXIT_FAILURE);
+	}
+		
+	i = 0;
+	while (i < data->height)
+	{
+		data->route.dup_map[i] = strdup(data->map[i]);
+		i++;
+	}
+	data->route.dup_map[i] = NULL;
+	if (path_finder(data) == 1)
+	{
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+		//free_double_pointer(data->map);
+		//free_map_copy(data);
+		ft_printf("impossible to complete the game.\n");
+		exit(0);
+	}
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data data;
@@ -324,7 +325,11 @@ int	main(int argc, char *argv[])
 	}
 	data.map_name = argv[1];
 	ft_readmap(&data);
-	data.win = mlx_new_window(data.mlx,data.width * TILE_SIZE, data.height* TILE_SIZE, "so_long");
+
+	//locate_p(&data);
+	//check_route(&data);
+	data.win = mlx_new_window(data.mlx,data.width * TILE_SIZE,
+		data.height* TILE_SIZE, "so_long");
 	if (data.win == NULL)
 	{
 		ft_printf("Error: Failed to create window.\n");
@@ -336,7 +341,6 @@ int	main(int argc, char *argv[])
 	mlx_hook(data.win,17,0,ft_esckey,&data);
 	mlx_hook(data.win, 2, 1L << 0, player_move, &data);
 	mlx_loop(data.mlx);
-	mlx_destroy_window(data.mlx, data.win);
 	free_data(&data);
 	return (0);
 }

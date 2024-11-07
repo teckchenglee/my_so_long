@@ -6,7 +6,7 @@
 /*   By: tlee <tlee@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 01:01:56 by tlee              #+#    #+#             */
-/*   Updated: 2024/11/06 22:28:37 by tlee             ###   ########.fr       */
+/*   Updated: 2024/11/07 21:20:28 by tlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,16 @@ typedef struct s_count
 	int collectible_count;
 }	t_count;
 
+typedef struct s_route
+{
+	char		**dup_map;
+}	t_route;
+
 typedef struct s_data
 {
 	t_images	img;
 	t_count		count;
+	t_route		route;
 	char		**map;
 	char		*map_name;
 	void		*mlx;
@@ -86,3 +92,10 @@ void ft_readmap(t_data *data);
 void free_data(t_data *data);
 void ft_loadimages(t_data *data);
 void ft_displayimage(t_data *data);
+
+void	ft_exit(t_data *data);
+
+void move_up(t_data *vars);
+void move_down(t_data *vars);
+void move_right(t_data *vars);
+void move_left(t_data *vars);

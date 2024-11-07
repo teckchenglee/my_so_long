@@ -6,7 +6,7 @@
 /*   By: tlee <tlee@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:19:53 by tlee              #+#    #+#             */
-/*   Updated: 2024/11/06 22:05:22 by tlee             ###   ########.fr       */
+/*   Updated: 2024/11/07 22:39:07 by tlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,18 @@ void ft_storemap(t_data *data)
 
 	i = 0;
 	fd = open(data->map_name, O_RDONLY);
-    if (fd == -1)
-    {
-		close(fd);
-        free_data(data);
-        ft_printf("Error: Failed to open map file.\n");
-        exit(EXIT_FAILURE);
-    }
+	if (fd == -1)
+	{
+		free_data(data);
+		ft_printf("Error: Failed to open map file.\n");
+		exit(EXIT_FAILURE);
+	}
 	while (i < data->display_y)
 	{
 		line = get_next_line(fd);
-		if (line == NULL)
+		if (line[i]=='\0')
 		{
+			ft_printf("Error: Failed to read map line\n");
 			free_data(data);
 			close(fd);
 			exit(EXIT_FAILURE);
@@ -126,9 +126,11 @@ void ft_storemap(t_data *data)
 		data->map[i] = ft_strdup(line);
 		if (!data->map[i])
 		{
-			free(data->map[i]);
+			ft_printf("Error: Memory allocation for map line failed\n");
+			free_data(data);
 			free(line);
-			break ;
+			close(fd);
+			exit(EXIT_FAILURE);
 		}
 		free(line);
 		i++;
@@ -149,7 +151,9 @@ void ft_readmap(t_data *data)
 	data->width = data->display_x;
 	data->height = data->display_y;
 	ft_printf("Map (height:%d, width:%d):\n",data->display_y,data->display_x);
-	data->map = ft_calloc(sizeof(char *), data->display_y + 1);
+	if (data->map)
+		free(data->map);
+	data->map = ft_calloc(sizeof(char *), data->display_x + 1);
 	if (data->map == NULL)
 	{
 		ft_printf("Error: Memory allocation for map failed.\n");

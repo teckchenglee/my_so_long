@@ -6,11 +6,12 @@
 /*   By: tlee <tlee@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:47:15 by tlee              #+#    #+#             */
-/*   Updated: 2024/11/06 21:47:51 by tlee             ###   ########.fr       */
+/*   Updated: 2024/11/07 22:25:59 by tlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
 
 void ft_loadimages(t_data *data)
 {
@@ -39,88 +40,47 @@ void ft_loadimages(t_data *data)
 	}
 }
 
-void	display_bg(t_data *data, int i, int j)
+// Helper function to display a tile at a specific position
+static void display_tile(t_data *data, int x, int y, char tile)
 {
-	int	x;
-	int	y;
+	int image_x;
+	int image_y;
 
-	while (data->map[i])
-	{
-		y = i * TILE_SIZE;
-		j = 0;
-		while (data->map[i][j] != '\0' && data->map[i][j] != '\n')
-		{
-			x = j * TILE_SIZE;
-			if (data->map[i][j] == '1')
-			{
-				mlx_put_image_to_window(data->mlx, data->win,
-					data->img.wall, x, y);
-			}
-			else if (data->map[i][j] == '0')
-			{
-				mlx_put_image_to_window(data->mlx, data->win,
-					data->img.floor, x, y);
-			}
-			j++;
-		}
-		i++;
-	}
-}
-void	display_obj(t_data *data, int i, int j)
-{
-	int	x;
-	int	y;
-
-	while (data->map[i])
-	{
-		y = i * TILE_SIZE;
-		j = 0;
-		while (data->map[i][j] != '\0' && data->map[i][j] != '\n')
-		{
-			x = j * TILE_SIZE;
-			if (data->map[i][j] == 'E')
-			{
-				mlx_put_image_to_window(data->mlx, data->win,
-					data->img.exit, x, y);
-			}
-			else if (data->map[i][j] == 'C')
-			{
-				mlx_put_image_to_window(data->mlx, data->win,
-					data->img.gem, x, y);
-			}
-			j++;
-		}
-		i++;
-	}
+	image_x = x * TILE_SIZE;
+	image_y = y * TILE_SIZE;
+	if (tile == '1')  // Wall
+		mlx_put_image_to_window(data->mlx, data->win, data->img.wall,
+			image_x, image_y);
+	else if (tile == '0')  // Floor
+		mlx_put_image_to_window(data->mlx, data->win, data->img.floor,
+			image_x, image_y);
+	else if (tile == 'E')  // Exit
+		mlx_put_image_to_window(data->mlx, data->win, data->img.exit,
+			image_x, image_y);
+	else if (tile == 'C')  // Collectible
+		mlx_put_image_to_window(data->mlx, data->win, data->img.gem,
+			image_x, image_y);
+	else if (tile == 'P')  // Player
+		mlx_put_image_to_window(data->mlx, data->win, data->img.player,
+			image_x, image_y);
 }
 
-void	display_player(t_data *data, int i, int j)
-{
-	int	x;
-	int	y;
-
-	while (data->map[i])
-	{
-		y = i * TILE_SIZE;
-		j = 0;
-		while (data->map[i][j] != '\0' && data->map[i][j] != '\n')
-		{
-			x = j * TILE_SIZE;
-			if (data->map[i][j] == 'P')
-			{
-				mlx_put_image_to_window(data->mlx, data->win,
-					data->img.player, x, y);
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
+// Function to display everything (background, objects, player) in one pass
 void ft_displayimage(t_data *data)
 {
-	display_bg(data,0,0);
-	display_obj(data,0,0);
-	display_player(data,0,0);
-	mlx_string_put(data->mlx, data->win, 24, data->height, 0x00000000,"42 Singapore Teck Cheng");
+	int i;
+	int j;
+
+	i = 0;
+	// Loop through the map once, rendering all elements
+	while (i < data->height)  // Iterate over rows
+	{
+		j = 0;
+		while (j < data->width)  // Iterate over columns
+		{
+			display_tile(data, j, i, data->map[i][j]);  // Display appropriate tile
+			j++;
+		}
+		i++;
+		
 }

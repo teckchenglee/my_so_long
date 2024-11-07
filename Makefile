@@ -6,7 +6,7 @@
 #    By: tlee <tlee@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 20:34:52 by tlee              #+#    #+#              #
-#    Updated: 2024/11/06 21:48:42 by tlee             ###   ########.fr        #
+#    Updated: 2024/11/07 21:21:21 by tlee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ AR				= ar rcs
 RM				= rm -f
 
 HEADERS			= so_long.h
-SRC 			= so_long.c utils_map.c utils_display.c
+SRC 			= so_long.c utils_map.c utils_display.c utils_exit.c \
+					utils_move.c
 
 OBJ		= $(SRC:.c=.o)
 OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
